@@ -7,23 +7,27 @@ var paths = {
 
 var appFiles = {
 	styles: [
-		'html/css/font-awesome.min.css',
-		'html/css/fancybox.css',
-		'html/css/style.css'
+		paths.styles.src + 'fancybox-custom.css',
+		paths.styles.src + 'style.css'
 	]
 }
 
 var gulp = require('gulp'),
 	minifyCSS = require('gulp-minify-css'),
-	concat = require('gulp-concat');
+	concat = require('gulp-concat'),
+	watch = require('gulp-watch');
 
 gulp.task('css', function() {
-  gulp.src(appFiles.styles)
-  	.pipe(concat('style.css'))
-	.pipe(minifyCSS({
-		keepSpecialComments:0
-	}))
+	gulp.src(appFiles.styles)
+		.pipe(concat('style.css'))
+		.pipe(minifyCSS({
+			keepSpecialComments:0
+		}))
 	.pipe(gulp.dest(paths.styles.dest))
+});
+
+gulp.task('watch', function () {
+	gulp.watch(appFiles.styles, ['css']);
 });
 
 gulp.task('default', ['css']);
